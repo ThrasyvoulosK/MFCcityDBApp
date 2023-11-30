@@ -92,8 +92,6 @@ void UpdateTab::OnBnClickedButton2()
 	lbox3 = (CListBox*)GetDlgItem(IDC_LIST3);
 	lbox4 = (CListBox*)GetDlgItem(IDC_LIST4);
 
-	//CStatic* text = (CStatic*)GetDlgItem(IDC_STATIC2);
-
 	CEdit* dbPath = (CEdit*)GetDlgItem(IDC_EDIT1);
 	CEdit* value1 = (CEdit*)GetDlgItem(IDC_EDIT2);
 	CEdit* value2 = (CEdit*)GetDlgItem(IDC_EDIT5);
@@ -113,31 +111,19 @@ void UpdateTab::OnBnClickedButton2()
 	lbox4->GetText(lbox4->GetCurSel(), sel5);
 	GetDlgItem(IDC_EDIT5)->GetWindowText(sel6);
 
-	//text->SetWindowTextW(sel1+sel2+sel3);
-
-	CString cityID;
-	CString cityName;
-	CString countryName;
-	CString cityPopulation;
-
 	CString query;
-	//query.Format();
 
 	CDatabase database;
 	CString SqlString;
-	//CString strID, strCityName, strCountryName, strPop;
 	CString sDriver = L"MICROSOFT ACCESS DRIVER (*.mdb)";
 	CString sDsn;
 
 	CString sFile;
 	GetDlgItem(IDC_EDIT1)->GetWindowText(sFile);
 
-	// You must change above path if it's different
-	int iRec = 0;
-
 	// Build ODBC connection string
-	//sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, dbPath);
 	sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, sFile);
+
 	TRY{
 		//std::cout << "Open" << std::endl;
 		//TRACE("Open");
@@ -147,20 +133,12 @@ void UpdateTab::OnBnClickedButton2()
 	CRecordset recset(&database);
 
 	SqlString.Format(L"UPDATE city SET %s %s %s WHERE %s %s %s",sel1,sel2,sel3,sel4,sel5,sel6);
-	//SqlString.Format(L"UPDATE city SET cityPopulation = 100 WHERE cityID > 11");
 	TRACE("Open %s %s %s %s %s %s", sel1, sel2, sel3, sel4, sel5, sel6);
 
 	database.ExecuteSQL(SqlString);
 
-
-	//text->SetWindowTextW(_T(database.ExecuteSQL(SqlString)));
-
 	// Close the database
 	database.Close();
-
-	//text->SetWindowTextW(strResult);
-	//text->SetWindowText(cityID);
-	//text->SetWindowTextW(_T("Yes"));
 
 	}
 		CATCH(CDBException, e) {

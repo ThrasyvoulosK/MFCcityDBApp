@@ -109,31 +109,24 @@ void SelectTab::OnBnClickedButton2()
 
 	GetDlgItem(IDC_EDIT2)->GetWindowText(sel3);
 
-	//text->SetWindowTextW(sel1+sel2+sel3);
-
 	CString cityID;
 	CString cityName;
 	CString countryName;
 	CString cityPopulation;
 
 	CString query;
-	//query.Format();
 
 	CDatabase database;
 	CString SqlString;
-	//CString strID, strCityName, strCountryName, strPop;
 	CString sDriver = L"MICROSOFT ACCESS DRIVER (*.mdb)";
 	CString sDsn;
 
 	CString sFile;
 	GetDlgItem(IDC_EDIT1)->GetWindowText(sFile);
 
-	// You must change above path if it's different
-	int iRec = 0;
-
 	// Build ODBC connection string
-	//sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, dbPath);
 	sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, sFile);
+
 	TRY{
 		//std::cout << "Open" << std::endl;
 		TRACE("Open");
@@ -142,36 +135,25 @@ void SelectTab::OnBnClickedButton2()
 
 	CRecordset recset(&database);
 
-
-	//SqlString = "INSERT INTO city (cityID,cityName,countryName,cityPopulation) VALUES (6,'London','UK',6)";
-	//SqlString.Format(L"INSERT INTO city (cityID,cityName,countryName,cityPopulation) VALUES (%s,'%s','%s',%s)",cityID,cityName,countryName,cityPopulation);
-	////SqlString.Format(L"SELECT * FROM city (cityID,cityName,countryName,cityPopulation) WHERE %s %s %s",sel1,sel2,sel3);
 	SqlString.Format(L"SELECT * FROM city WHERE %s %s %s",sel1,sel2,sel3);
-	//SqlString.Format(L"SELECT * FROM city WHERE cityID>3");
-	//database.ExecuteSQL(SqlString);
-	//recset.m_strFilter = sel1+sel2+sel3;
-
-
-	//text->SetWindowTextW(_T(database.ExecuteSQL(SqlString)));
-
 
 	recset.Open(CRecordset::forwardOnly, SqlString, CRecordset::readOnly);
-	//recset.Open(CRecordset::forwardOnly, recset.m_strFilter, CRecordset::readOnly);
 
 	CString strValue;
-	strValue="cityID	cityName	CountryName	cityPopulation \n";
+	strValue = "cityID	cityName	CountryName	cityPopulation \n";
+
 	while (!recset.IsEOF())
-	{			
+	{
 		CString strCur;
 		CString cityID,cityName,countryName,cityPopulation;
-		//recset.GetFieldValue(_T("cityName"), strCur);
+
 		// Copy each column into a variable
 		recset.GetFieldValue(_T("cityID"), cityID);
 		recset.GetFieldValue(_T("cityName"), cityName);
 		recset.GetFieldValue(_T("countryName"), countryName);
 		recset.GetFieldValue(_T("cityPopulation"), cityPopulation);
-		strCur.Append( cityID + "\t"+ cityName + "\t" +countryName + "\t"+ cityPopulation);
-		strValue.Append(strCur+"\n");
+		strCur.Append(cityID + "\t" + cityName + "\t" + countryName + "\t" + cityPopulation);
+		strValue.Append(strCur + "\n");
 		recset.MoveNext();
 	}
 
@@ -181,94 +163,14 @@ void SelectTab::OnBnClickedButton2()
 	return;
 
 
-	// populate Grids
-	//CListCtrl m_ListControl;
-	/*ListView_SetExtendedListViewStyle(m_ListControl, LVS_EX_GRIDLINES);*/
-
-	// Column width and heading
-	/*m_ListControl.InsertColumn(0, L"cityID", LVCFMT_LEFT, -1, 0);
-	m_ListControl.InsertColumn(1, L"cityName", LVCFMT_LEFT, -1, 1);
-	m_ListControl.InsertColumn(2, L"countryName", LVCFMT_LEFT, -1, 1);
-	m_ListControl.InsertColumn(3, L"cityPopulation", LVCFMT_LEFT, -1, 1);
-	m_ListControl.SetColumnWidth(0, 120);
-	m_ListControl.SetColumnWidth(1, 200);
-	m_ListControl.SetColumnWidth(2, 200);
-	m_ListControl.SetColumnWidth(3, 200);*/
-
-	CString strResult,strOne;
-
-	// Loop through each record
-	while (!recset.IsEOF()) {
-
-		CString strValue;// , strOne;
-		/*recset.GetFieldValue(L"cityName",strOne);
-		text->SetWindowTextW(strOne);
-		break;*/
-		CString recs;
-		iRec = recset.GetRowsFetched();
-		recs.Format(_T("%d"), iRec);
-		text->SetWindowTextW(recs);
-		//break;
-
-		//recset.GetFieldValue(_T("YourColumnName"), strValue);
-		recset.GetFieldValue(_T("cityName"), strValue);
-		//strResult += strValue + _T("\n"); // Append to the result string
-		strResult.Append(strValue+L"\n");
-		//text->SetWindowTextW(strValue);
-		//text->SetWindowTextW(strResult);
-
-		// Copy each column into a variable
-		//recset.GetFieldValue(L"cityID", cityID);
-		recset.GetFieldValue(_T("cityID"), cityID);
-		//recset.GetFieldValue(L"cityName", cityName);
-		recset.GetFieldValue(_T("cityName"), cityName);
-		//recset.GetFieldValue(L"countryName", countryName);
-		recset.GetFieldValue(_T("countryName"), countryName);
-		//recset.GetFieldValue(L"cityPopulation", cityPopulation);
-		recset.GetFieldValue(_T("cityPopulation"), cityPopulation);
-
-		//text->SetWindowTextW(cityID + cityName + countryName + cityPopulation);
-		//text->SetWindowTextW(cityName);
-
-		// Insert values into the list control
-		/*iRec = m_ListControl.InsertItem(0, cityID, 0);
-		m_ListControl.SetItemText(0, 1, cityName);
-		m_ListControl.SetItemText(0, 2, countryName);
-		m_ListControl.SetItemText(0, 3, cityPopulation);*/
-
-		// goto next record
-		recset.MoveNext();
-
-		iRec++;
-
-		/*CString recs;
-		iRec = recset.GetRowsFetched();
-		recs.Format(_T("%d"), iRec);
-		text->SetWindowTextW(recs);*/
-		
 	}
-
-	//CString recs;
-	//recs.Format(_T("%d"), iRec);
-	//text->SetWindowTextW(strResult);
-	//text->SetWindowTextW(strOne);
-	//text->SetWindowTextW(recs);
-
-	// Close the database
-	database.Close();
-
-	//text->SetWindowTextW(strResult);
-	//text->SetWindowText(cityID);
-	//text->SetWindowTextW(_T("Yes"));
-
-	}
-	CATCH(CDBException, e) {
+		CATCH(CDBException, e) {
 		// If a database exception occured, show error msg
 		//std::cout << "Error" << std::endl;
 		TRACE("Error");
 		//AfxMessageBox(L"Database error: " + e→m_strError);
-
 		//text->SetWindowTextW(_T("Error"));
+
+		END_CATCH;
 	}
-	END_CATCH;
 }

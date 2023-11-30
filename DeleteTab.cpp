@@ -73,8 +73,6 @@ void DeleteTab::OnBnClickedButton2()
 	lbox1 = (CListBox*)GetDlgItem(IDC_LIST1);
 	lbox2 = (CListBox*)GetDlgItem(IDC_LIST2);
 
-	//CStatic* text = (CStatic*)GetDlgItem(IDC_STATIC2);
-
 	CEdit* dbPath = (CEdit*)GetDlgItem(IDC_EDIT1);
 	CEdit* value = (CEdit*)GetDlgItem(IDC_EDIT2);
 
@@ -86,30 +84,17 @@ void DeleteTab::OnBnClickedButton2()
 
 	GetDlgItem(IDC_EDIT2)->GetWindowText(sel3);
 
-	//text->SetWindowTextW(sel1+sel2+sel3);
-
-	CString cityID;
-	CString cityName;
-	CString countryName;
-	CString cityPopulation;
-
 	CString query;
-	//query.Format();
 
 	CDatabase database;
 	CString SqlString;
-	//CString strID, strCityName, strCountryName, strPop;
 	CString sDriver = L"MICROSOFT ACCESS DRIVER (*.mdb)";
 	CString sDsn;
 
 	CString sFile;
 	GetDlgItem(IDC_EDIT1)->GetWindowText(sFile);
 
-	// You must change above path if it's different
-	int iRec = 0;
-
 	// Build ODBC connection string
-	//sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, dbPath);
 	sDsn.Format(L"ODBC;DRIVER={%s};DSN='';DBQ=%s", sDriver, sFile);
 	TRY{
 		//std::cout << "Open" << std::endl;
@@ -123,15 +108,8 @@ void DeleteTab::OnBnClickedButton2()
 
 	database.ExecuteSQL(SqlString);
 
-
-	//text->SetWindowTextW(_T(database.ExecuteSQL(SqlString)));
-
 	// Close the database
 	database.Close();
-
-	//text->SetWindowTextW(strResult);
-	//text->SetWindowText(cityID);
-	//text->SetWindowTextW(_T("Yes"));
 
 	}
 		CATCH(CDBException, e) {

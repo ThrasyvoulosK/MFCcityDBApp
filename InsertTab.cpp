@@ -69,11 +69,9 @@ void InsertTab::OnBnClickedButton1()
 	GetDlgItem(IDC_EDIT6)->GetWindowText(cityPopulation);
 
 	CString query;
-	//query.Format();
 
 	CDatabase database;
 	CString SqlString;
-	//CString strID, strCityName, strCountryName, strPop;
 	CString sDriver = L"MICROSOFT ACCESS DRIVER (*.mdb)";
 	CString sDsn;
 
@@ -87,7 +85,6 @@ void InsertTab::OnBnClickedButton1()
 	// Open the database
 	database.Open(NULL,false,false,sDsn);
 
-	//SqlString = "INSERT INTO city (cityID,cityName,countryName,cityPopulation) VALUES (6,'London','UK',6)";
 	SqlString.Format(L"INSERT INTO city (cityID,cityName,countryName,cityPopulation) VALUES (%s,'%s','%s',%s)",cityID,cityName,countryName,cityPopulation);
 	database.ExecuteSQL(SqlString);
 	// Close the database
